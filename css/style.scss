@@ -1,0 +1,36 @@
+ul#plugin-meta{
+  li {
+    display: inline-block;
+    vertical-align: middle;
+
+    h1 {
+      font-size: 3em;
+      margin: 0 0 .1em 0;
+    }
+
+    h2 {
+      margin: 0;
+      font-style: italic;
+      font-weight: 200;
+      padding-left: 1em;
+    }
+
+    img {
+      width: 150px;
+      height: auto;
+      padding: .5em .5em .5em 0;
+    }
+  }
+}
+
+section#wpemail_reports {
+    ul {
+
+      li {
+        display: inline-block;
+        font-size: 1em;
+        font-weight: bold;
+        padding: .2em 0;
+      }
+    }
+}

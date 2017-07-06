@@ -1,0 +1,34 @@
+<html class="reports-by-mail">
+<head>
+    <style>
+        .reports-by-mail {
+            width: 80%;
+            margin: auto;
+            text-align: center;
+        }
+
+        .reports-by-mail table {
+            width: 100%;
+        }
+
+        body table td {
+            padding: .5em 1em .5em 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <p><strong>Site: <% site_name %></strong></p>
+    <p><strong>URL: <% site_url %></strong></p>
+    <br/>
+
+    <p><strong><% report_type %> Report | <% report_period %> | Total Posts: <% total_posts %></strong></p>
+    <hr/>
+
+    <table>
+        <% report %>
+    </table>
+<hr/>
+<p><small>Powered by <a href="https://github.com/jcwrightson/reports-by-mail">Reports by Mail</a></small></p>
+</body>
+</html>
