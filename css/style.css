@@ -14,10 +14,13 @@ ul#plugin-meta li {
     height: auto;
     padding: .5em .5em .5em 0; }
 
-section#wpemail_reports ul li {
-  display: inline-block;
-  font-size: 1em;
-  font-weight: bold;
-  padding: .2em 0; }
+section#wpemail_reports {
+  font-family: "Courier New";
+  font-size: 1em; }
+  section#wpemail_reports ul li {
+    display: inline-block;
+    font-size: 1em;
+    font-weight: bold;
+    padding: .2em 0; }
 
 /*# sourceMappingURL=style.css.map */

@@ -71,17 +71,15 @@ add_action('admin_menu', 'wpemail_options_page');
 function print_debug(){
 
     $today_date = date("Y-m-d");
-
+    $thisday = date("N");
     $today = $today_date . " " . date("H:i:s", strtotime("00:00:00"));
 
-
     $thedate = DateTime::createFromFormat('Y-m-d H:i:s', $today);
-    $thedate->modify('-1 week');
+    $thedate->modify('-'. ($thisday - 1) .'days');
     $thisweek = $thedate->format('Y-m-d H:i:s');
 
-    $thedate = DateTime::createFromFormat('Y-m-d H:i:s', $today);
-    $thedate->modify('-1 month');
-    $thismonth = $thedate->format('Y-m-d H:i:s');
+    $thismonth = date("Y-m-") . date("d H:i:s", strtotime("01 00:00:00"));
+    $thisyear = date("Y-") .  date("m-d H:i:s", strtotime("01-01 00:00:00"));
 
 
     $query_by_day = array(
@@ -111,7 +109,16 @@ function print_debug(){
     $query = new WP_Query( $query_by_day );
     ?>
 
+    <h1>Debug Stuff</h1>
     <section id="wpemail_reports">
+    <?php
+    echo 'Today Started: ' . $today . "<br/>";
+    echo 'This Week Started: ' . $thisweek . "<br/>";
+    echo 'This Month Started: ' . $thismonth . "<br/>";
+    echo 'This Year Started: ' . $thisyear;
+    ?>
+    <br/><br/>
+
         <h1>Published Today (<?php echo $query->post_count; ?>)</h1>
     <?php while ( $query->have_posts() ) : $query->the_post();?>
         <ul class="wpemail_reports">
@@ -146,10 +153,13 @@ function print_debug(){
     <?php endwhile;?>
         <?php wp_reset_query();?>
 
+
+
+       <?php echo '<pre>'; print_r( _get_cron_array() ); echo '</pre>';?>
     </section>
     <?php
 
-    echo '<pre>'; print_r( _get_cron_array() ); echo '</pre>';
+
 }
 
 

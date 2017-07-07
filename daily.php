@@ -76,7 +76,7 @@ function wpemail_daily_task ($debug){
     $query = new WP_Query($query_by_day);
 
     array_push($report, [
-        'report_period' => $today,
+        'report_period' => $today_date,
         'report_type' => 'Daily',
         'total_posts' => $query->post_count,
         'site_name' => get_option('blogname'),
