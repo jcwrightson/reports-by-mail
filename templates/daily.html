@@ -1,32 +1,52 @@
-<html class="reports-by-mail">
+<html>
 <head>
     <style>
-        .reports-by-mail {
+        body.reports-by-mail {
             width: 80%;
             margin: auto;
             text-align: center;
         }
 
-        .reports-by-mail table {
-            width: 100%;
+        body.reports-by-mail h1{
+
+        }
+
+        body.reports-by-mail table {
+            width: 400px;
         }
 
         body table td {
             padding: .5em 1em .5em 0;
             text-align: left;
+            min-width: 120px;
         }
+
+        body table thead td{
+            font-weight: bold;
+            text-align: left;
+        }
+
     </style>
 </head>
-<body>
-    <p><strong>Site: <% site_name %></strong></p>
-    <p><strong>URL: <% site_url %></strong></p>
+<body class="reports-by-mail">
+    <h1>Reports by Mail &mdash; <% report_type %> Report</h1>
+    <h2><a href="<% site_url %>" target="_blank"><% site_name %></a></h2>
     <br/>
 
-    <p><strong><% report_type %> Report | <% report_period %> | Total Posts: <% total_posts %></strong></p>
+    <p><strong>Total Posts: <% total_posts %></strong></p>
     <hr/>
 
     <table>
+        <thead>
+            <tr>
+                <td>Posted</td>
+                <td>Title</td>
+                <td>Author</td>
+            </tr>
+        </thead>
+        <tbody>
         <% report %>
+        </tbody>
     </table>
 <hr/>
 <p><small>Powered by <a href="https://github.com/jcwrightson/reports-by-mail">Reports by Mail</a></small></p>
