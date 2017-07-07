@@ -47,21 +47,21 @@ function process_template($templatefile, $report){
     }
 }
 
-function wpemail_daily_task ($send){
+function wpemail_daily_task ($debug){
+    
+    $today_date = date("Y-m-d");
 
-    $today = date("Y-m-d");
+    $today = $today_date . " " . date("H:i:s", strtotime("00:00:00"));
+    $nine_am = $today_date . " " . date("H:i:s", strtotime("09:00:00"));
 
-    $thedate = DateTime::createFromFormat('Y-m-d', $today);
-    $thedate->modify('-1 day');
-    $yesterday = $thedate->format('Y-m-d');
-
+    
     $report = [];
 
     $query_by_day = array(
         'post_type' => 'post',
         'post_status' => 'publish',
         'date_query' => array(
-            'after' => $yesterday
+            'after' => $today
         )
     );
 
@@ -97,43 +97,39 @@ function wpemail_daily_task ($send){
 
     $msg = process_template('daily.html', $report);
 
-    if ($send) {
+    if (!$debug) {
         if (!$to) {
             if ($admin_email) {
-                send_report($admin_email, $msg);
+                schedule_mail($admin_email, $msg, $nine_am);
             }
         } else {
-            send_report($to, $msg);
+            schedule_mail($to, $msg, $nine_am);
         }
     } else {
         echo $msg;
+    }
+
+
+    function schedule_mail($to, $msg, $time){
+
+        add_action( 'wpemail_send_report', 'wpemail_send_task', 10, 2 );
+
+
+        if (!wp_next_scheduled('wpemail_send_report')) {
+
+            wp_schedule_single_event(strtotime($time), 'wpemail_send_report', [$to, $msg]);
+        }
+
     }
     
 }
 
 
-function send_report($to, $message){
+function wpemail_send_task($to, $msg){
     $subject = "WordPress Reports By Mail: Your Daily Report";
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: " . get_option('admin_email') . "\r\n";
+    //$headers .= "From: " . get_option('admin_email') . "\r\n";
 
-    wp_mail( $to, $subject, $message, $headers);
-}
-
-
-add_action( 'wpemail_daily_report', 'wpemail_daily_task' );
-
-if ( ! wp_next_scheduled( 'wpemail_daily_report' ) ) {
-    wp_schedule_event( time(), 'daily', 'wpemail_daily_report' );
-}
-
-
-
-//Deactivate
-register_deactivation_hook( __FILE__, 'wpemail_deactivate' );
-
-function wpemail_deactivate() {
-    $timestamp = wp_next_scheduled( 'wpemail_daily_report' );
-    wp_unschedule_event( $timestamp, 'wpemail_daily_report' );
+    wp_mail( $to, $subject, $msg, $headers);
 }

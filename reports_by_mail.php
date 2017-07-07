@@ -24,3 +24,31 @@ add_action('admin_print_styles', 'add_styles');
 
 require_once ($here . '/admin.php');
 require_once ($here . '/daily.php');
+
+//wp_unschedule_event( 1499421657, 'wpemail_daily_report');
+
+add_action( 'wpemail_daily_report', 'wpemail_daily_task', 10 );
+
+if ( ! wp_next_scheduled( 'wpemail_daily_report' ) ) {
+
+    $today_date = date("Y-m-d");
+    $ten_to_midnight = $today_date . " " . date("H:i:s", strtotime("23:50:00"));
+
+    wp_schedule_event( strtotime($ten_to_midnight), 'daily', 'wpemail_daily_report' );
+}
+
+
+
+//Deactivate
+register_deactivation_hook( __FILE__, 'wpemail_deactivate' );
+
+function wpemail_deactivate() {
+
+    //Deactivate Daily Task
+    $timestamp = wp_next_scheduled( 'wpemail_daily_report' );
+    wp_unschedule_event( $timestamp, 'wpemail_daily_report' );
+
+    //Deactivate Email Task
+    $timestamp = wp_next_scheduled( 'wpemail_send_report' );
+    wp_unschedule_event( $timestamp, 'wpemail_send_report' );
+}

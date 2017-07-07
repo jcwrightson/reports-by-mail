@@ -62,7 +62,7 @@ function wpemail_options_page()
         'wpemail',
         'wpemail_options_page_html',
         plugin_dir_url(__FILE__) . 'icon.png',
-        360
+        500
     );
 }
 
@@ -70,28 +70,25 @@ add_action('admin_menu', 'wpemail_options_page');
 
 function print_debug(){
 
-    $today = date("Y-m-d");
+    $today_date = date("Y-m-d");
 
-    $thedate = DateTime::createFromFormat('Y-m-d', $today);
-    $thedate->modify('-1 day');
-    $yesterday = $thedate->format('Y-m-d');
+    $today = $today_date . " " . date("H:i:s", strtotime("00:00:00"));
 
-    $thedate = DateTime::createFromFormat('Y-m-d', $today);
+
+    $thedate = DateTime::createFromFormat('Y-m-d H:i:s', $today);
     $thedate->modify('-1 week');
-    $thedate->modify('-1 day');
-    $thisweek = $thedate->format('Y-m-d');
+    $thisweek = $thedate->format('Y-m-d H:i:s');
 
-    $thedate = DateTime::createFromFormat('Y-m-d', $today);
+    $thedate = DateTime::createFromFormat('Y-m-d H:i:s', $today);
     $thedate->modify('-1 month');
-    $thedate->modify('-1 day');
-    $thismonth = $thedate->format('Y-m-d');
+    $thismonth = $thedate->format('Y-m-d H:i:s');
 
 
     $query_by_day = array(
         'post_type' => 'post',
         'post_status'   => 'publish',
         'date_query' => array(
-            'after' => $yesterday
+            'after' => $today
         )
     );
 
@@ -190,8 +187,8 @@ function wpemail_options_page_html() {
 
         </form>
 
-<!--        --><?php //print_debug(); ?>
-<!--        --><?php //wpemail_daily_task(true); ?>
+        <?php print_debug(); ?>
+        <?php wpemail_daily_task(true); ?>
 
     </div>
     <?php
