@@ -109,19 +109,22 @@ function wpemail_daily_task ($debug){
         echo $msg;
     }
 
-
-    function schedule_mail($to, $msg, $time){
-
-        add_action( 'wpemail_send_report', 'wpemail_send_task', 10, 2 );
-
-
-        if (!wp_next_scheduled('wpemail_send_report')) {
-
-            wp_schedule_single_event(strtotime($time), 'wpemail_send_report', [$to, $msg]);
-        }
-
-    }
     
+}
+
+function schedule_mail($to, $msg, $time){
+
+    add_action( 'wpemail_send_report', 'wpemail_send_task', 10, 2 );
+
+
+    if (!wp_next_scheduled('wpemail_send_report')) {
+
+        wp_schedule_single_event(strtotime($time), 'wpemail_send_report', [$to, $msg]);
+
+        //Debug
+        //wp_schedule_single_event(time(), 'wpemail_send_report', [$to, $msg]);
+    }
+
 }
 
 

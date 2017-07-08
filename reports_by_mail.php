@@ -4,7 +4,7 @@
 Plugin Name: Reports by Mail
 Plugin URI: https://github.com/jcwrightson/reports-by-mail
 Description: Get daily/weekly/monthly reports of published posts directly to your inbox.
-Version:     1.0a
+Version:     1.3a
 Author:      jcwrightson
 Author URI:  mailto:jcwrightson@gmail.com
 License:     GPL2
@@ -25,16 +25,18 @@ add_action('admin_print_styles', 'add_styles');
 require_once ($here . '/admin.php');
 require_once ($here . '/daily.php');
 
-//wp_unschedule_event( 1499421657, 'wpemail_daily_report');
 
-add_action( 'wpemail_daily_report', 'wpemail_daily_task', 10 );
+add_action( 'wpemail_daily_report', 'wpemail_daily_task', 10, 1 );
 
 if ( ! wp_next_scheduled( 'wpemail_daily_report' ) ) {
 
     $today_date = date("Y-m-d");
     $ten_to_midnight = $today_date . " " . date("H:i:s", strtotime("23:50:00"));
 
-    wp_schedule_event( strtotime($ten_to_midnight), 'daily', 'wpemail_daily_report' );
+    wp_schedule_event( strtotime($ten_to_midnight), 'daily', 'wpemail_daily_report', [false] );
+    
+    //Debug
+    //wp_schedule_event( time(), 'hourly', 'wpemail_daily_report', [false] );
 }
 
 

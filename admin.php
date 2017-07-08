@@ -155,7 +155,7 @@ function print_debug(){
 
 
 
-       <?php echo '<pre>'; print_r( _get_cron_array() ); echo '</pre>';?>
+<!--       --><?php //echo '<pre>'; print_r( _get_cron_array() ); echo '</pre>';?>
     </section>
     <?php
 
