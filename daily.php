@@ -18,28 +18,40 @@ function process_template($templatefile, $report){
         $template = preg_replace("/<% site_url %>/", $report[0]['site_url'], $template);
         $template = preg_replace("/<% report_type %>/", $report[0]['report_type'], $template);
         $template = preg_replace("/<% report_period %>/", $report[0]['report_period'], $template);
+        $template = preg_replace("/<% day_of_week %>/", $report[0]['report_day'], $template);
         $template = preg_replace("/<% total_posts %>/", $report[0]['total_posts'], $template);
 
 
-        $i = 0;
-
-        $report_list = null;
+        if ($report[0]['total_posts'] !== 0){
 
 
-        foreach ($report as $row){
-            if ($i > 0){ // First (0) row of report contains meta, we want to skip this
+            $i = 0;
 
-                $report_row = "<tr>";
-                $report_row .= "<td>" . $row['time'] . "</td>";
-                $report_row .= "<td>" . $row['title'] . "</td>";
-                $report_row .= "<td>" . $row['author'] . "</td>";
-                $report_row .= "</tr>";
-                $report_list .= $report_row;
+            $report_list = null;
+
+            foreach ($report as $row){
+                if ($i > 0){ // First (0) row of report contains meta, we want to skip this
+
+                    $report_row = "<tr>";
+                    $report_row .= "<td style='padding: .5em 1em .5em 0; text-align: left; min-width: 120px;'>" . $row['time'] . "</td>";
+                    $report_row .= "<td style='padding: .5em 1em .5em 0; text-align: left; min-width: 120px;'>" . $row['title'] . "</td>";
+                    $report_row .= "<td style='padding: .5em 1em .5em 0; text-align: left; min-width: 120px;'>" . $row['author'] . "</td>";
+                    $report_row .= "</tr>";
+                    $report_list .= $report_row;
+                }
+
+                $i++;
+
             }
 
-            $i++;
+            $template = preg_replace("/<% report %>/", $report_list, $template);
+        }else {
 
+            $template = preg_replace("/<% report %>/", "<tr><td>No Posts</td><tr>", $template);
         }
+
+
+
 
         $template = preg_replace("/<% report %>/", $report_list, $template);
 
@@ -52,7 +64,6 @@ function wpemail_daily_task ($debug){
     logger("Daily Task Called");
 
     $today_date = date("Y-m-d");
-
     $today = $today_date . " " . date("H:i:s", strtotime("00:00:00"));
 
     $nine_am = strtotime($today_date . " " . date("H:i:s", strtotime("09:00:00")));
@@ -81,6 +92,7 @@ function wpemail_daily_task ($debug){
 
     array_push($report, [
         'report_period' => $today_date,
+        'report_day' =>  date("D"),
         'report_type' => 'Daily',
         'total_posts' => $query->post_count,
         'site_name' => get_option('blogname'),

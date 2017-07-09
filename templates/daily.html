@@ -1,54 +1,29 @@
 <html>
-<head>
-    <style>
-        body.reports-by-mail {
-            width: 80%;
-            margin: auto;
-            text-align: center;
-        }
+<body class="reports-by-mail" style="background-color: #f6f6f6; text-align: left;" >
 
-        body.reports-by-mail h1{
+    <ul style="list-style: none; text-align: center; ">
+        <li style="display: inline-block; vertical-align: middle; text-align: left;"><img height="150" width="150" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAIAAAAiOjnJAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABS5JREFUeNrs3T9onGUcwPGkBjnJooOQOqVFpDSTQ6Vghw4Ogh2EVgcnXQRxcuoYHNvJIVlcLLpIuxRqoEMhGSKEhECWhENEM5nQDO0SemAHf2eqXP71/j3Jvfc8ny8Z2hLC9b3Pvc/vfe5yN3r95vSIlLozDoHAElgCSwJLYAksCSyBJbAksASWwJLAElgCSwJLYAksCSyBJbAksASWwJLAElgCSwJLYAksCSyBJbAksASWwJLAElgCSwJLYCnTxip4m8Zfq7138cKlqQvnzk68+cbr7qQj23ny9M+t7ZX1+vJGffdZo2o3b7Rqn6Xz0ZXLn35wdbxWQ6fDdhuNu48W5haXKnWrXrl45Wp1TlTffHbj2vuXXx0bw6Xz4nC9+87bk29NrP32+9/Pn5uxDqr69svPYwUEpbfi0MUBjMMI1r6+/uTjybMTfPRTHMA4jGDtm6ucq1Kdt+JggvViEYxpnYlUNS99KrAgnqnCg8w1YMoHaq1WhdP/4GFdmrIIZnhIBw/rnJk9x0M6eFj21rM8pJ4rFFgCS2BJYAksgSWBJbAElgSWwBJYElgCS2BJYAksgSWBJbAElgSWwCqnnSdPwVLifvjl4a2ffgZLKVveqM8tLm3+tR28wFKaNre2Z+/d3/tz8ApkYKnfdhuNmXv3W9/AOJAVO2yBlaw7Dx7GCriP2rNGscMWWGlaWF2bX107YnEsddgCK81oNfPfaHW4MoctsBKMVrd/bLPeFThslQUrzhzJTx6B5nE7NAUOWwXB2tsLiK/4Q6qfeffRwvJ6R1JLG7ZKgfX/XkB8xcoVf+3/Z67/sRmwOv/+ooatUmC17gXEyjX9/Z0+bcXMdLv71a2cYasIWIf3AgJZUOvnZ8bM1MOHuZUzbOUP67i9gKDW1ULWWkxLB/ZCu7g9ZQxbmcN6+V5AwFo4alez7fmvzw8HLGHYyhxW272AmS4vEuObk5xvsh+2cobV4V5ADPId3seHn2bu/VSa+7CVLazO9wL27uNOLhIPP83c1/CX9bCVJ6zmaNXN+SDu49njn+x7MRj9ujTf/UBW7LCVJ6zmNlWXC1Ysmi+x1RytHpzI2SXXYStDWD3vBcQJ6ciLxE6eZjZsZQ6rz72AmM1jODvwj6Hq8UmeVLIctrKClWQvIIaz1g2IuAI4TC15+Q1b+cBKtRfQ+ix13Nk9784XPmzlAyvhXsDes9RxN7e9VDRsZQ4r+V5AGP3q1ndJ9kLLHLZygHVyewEDeITkMmwNPawT3QsYSHkMW0MP66T3AgbwUMli2BpuWKezFzCAxX34h60hhtXtS84NW2C1r7eXnBu2wGpTby85N2ydWmNDeiX4xbUPR8oo/rPjtRpYp1Ec6KnzkyOyFAosCSyBJbAksASWwJLAElgCSwJLLSV5h1WwdLAqvKoWrAxbWa+DpfTrYBVe0wxWbs0tLlXhtbVgZdXm1nZFfsEErHza+fctJypyY8bcH9mcq5pvklOZXzABK4diWp9N9HbOYKl5AbiyXp9fXavgr4PnAOu4j83NXlXC9wYH6whVM6f49mgq4qqQKrCoAosqlQmLKrCoAosqlQmLKrCoAosqlQmLKrCo0jDAogosqjQMsKgCiyoNAyyqwKJKwwCLKrCo0jDAWt6oUwVW4ja3tmepyq7R6zenHQVlflUosCSwBJbAksASWAJLAktgCSwJLIElsCSwBJbAksASWAJLAktgCSwJLIElsCSwBJbAksASWAJLYElgCSyBJYElsASWBJbAElhSuv4RYAD1lMZLNVmitwAAAABJRU5ErkJggg=="/></li>
+        <li style="display: inline-block; vertical-align: middle; text-align: left;"><h1 style="margin:0; padding: 0; font-size: 3em;">Reports by Mail</h1><br/><h2 style="margin:0; font-style: italic; font-weight: 200; padding: 0; padding-left: 1em;" >&mdash; Reports direct to your inbox.</h2></li>
+    </ul>
 
-        }
 
-        body.reports-by-mail table {
-            width: 400px;
-        }
+    <h1 style="text-align: center; margin: 0;"><a href="<% site_url %>" target="_blank"><% site_name %></a> | <% report_type %> Report | <% total_posts %> posts on <% day_of_week %></h1>
 
-        body table td {
-            padding: .5em 1em .5em 0;
-            text-align: left;
-            min-width: 120px;
-        }
 
-        body table thead td{
-            font-weight: bold;
-            text-align: left;
-        }
+    <table style="width:100%; max-width: 800px; margin: auto; margin-top:2em;background-color: #ffffff; padding: 1em;">
 
-    </style>
-</head>
-<body class="reports-by-mail">
-    <h1>Reports by Mail &mdash; <% report_type %> Report</h1>
-    <h2><a href="<% site_url %>" target="_blank"><% site_name %></a></h2>
-    <br/>
-
-    <p><strong>Total Posts: <% total_posts %></strong></p>
-    <hr/>
-
-    <table>
         <thead>
-            <tr>
-                <td>Posted</td>
-                <td>Title</td>
-                <td>Author</td>
+            <tr >
+                <td style="border-bottom: 1px solid gray; font-weight: bold;">Posted</td>
+                <td style="border-bottom: 1px solid gray; font-weight: bold;">Title</td>
+                <td style="border-bottom: 1px solid gray; font-weight: bold;">Author</td>
             </tr>
         </thead>
         <tbody>
         <% report %>
         </tbody>
     </table>
-<hr/>
-<p><small>Powered by <a href="https://github.com/jcwrightson/reports-by-mail">Reports by Mail</a></small></p>
+
+<p style="text-align: center; padding: 2em;"><small>Powered by <a href="https://github.com/jcwrightson/reports-by-mail">Reports by Mail</a></small></p>
 </body>
 </html>

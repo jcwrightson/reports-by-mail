@@ -203,8 +203,10 @@ function wpemail_options_page_html() {
 
         </form>
 
-        <?php print_debug(); ?>
-        <?php wpemail_daily_task(true); ?>
+<!--        --><?php //print_debug(); ?>
+<!---->
+<!--        <h1>Email Sample:</h1>-->
+<!--        --><?php //wpemail_daily_task(true); ?>
 
     </div>
     <?php
