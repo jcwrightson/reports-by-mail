@@ -25,23 +25,31 @@ add_action('admin_print_styles', 'add_styles');
 require_once ($here . '/admin.php');
 require_once ($here . '/daily.php');
 
+// On Plugin Activation
+register_activation_hook( __FILE__, 'wpemail_activate' );
 
-add_action( 'wpemail_daily_report', 'wpemail_daily_task', 10, 1 );
+function wpemail_activate(){
 
-if ( ! wp_next_scheduled( 'wpemail_daily_report' ) ) {
 
-    $today_date = date("Y-m-d");
-    $ten_to_midnight = $today_date . " " . date("H:i:s", strtotime("23:50:00"));
+    if (!wp_next_scheduled('wpemail_daily_report')) {
 
-    wp_schedule_event( strtotime($ten_to_midnight), 'daily', 'wpemail_daily_report', [false] );
-    
-    //Debug
-    //wp_schedule_event( time(), 'hourly', 'wpemail_daily_report', [false] );
+        $today_date = date("Y-m-d");
+        $ten_to_midnight = strtotime($today_date . " " . date("H:i:s", strtotime("23:50:00")));
+        $ten_to_midnight = get_gmt_from_date( date( 'Y-m-d H:i:s', $ten_to_midnight ), 'U' );
+
+
+        wp_schedule_event($ten_to_midnight, 'daily', 'wpemail_daily_report', [false]);
+
+        //Debug
+        //wp_schedule_event( time(), 'hourly', 'wpemail_daily_report', [false] );
+    }
 }
 
+add_action( 'wpemail_daily_report', 'wpemail_daily_task', 10, 1);
 
 
-//Deactivate
+
+// On Plugin Deactivation
 register_deactivation_hook( __FILE__, 'wpemail_deactivate' );
 
 function wpemail_deactivate() {

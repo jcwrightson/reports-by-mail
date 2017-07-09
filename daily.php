@@ -48,11 +48,14 @@ function process_template($templatefile, $report){
 }
 
 function wpemail_daily_task ($debug){
-    
+
+
     $today_date = date("Y-m-d");
 
     $today = $today_date . " " . date("H:i:s", strtotime("00:00:00"));
-    $nine_am = $today_date . " " . date("H:i:s", strtotime("09:00:00"));
+
+    $nine_am = strtotime($today_date . " " . date("H:i:s", strtotime("09:00:00")));
+    $nine_am = get_gmt_from_date( date( 'Y-m-d H:i:s', $nine_am ), 'U' );
 
     
     $report = [];
@@ -112,10 +115,11 @@ function wpemail_daily_task ($debug){
     
 }
 
+
+
 function schedule_mail($to, $msg, $time){
 
     add_action( 'wpemail_send_report', 'wpemail_send_task', 10, 2 );
-
 
     if (!wp_next_scheduled('wpemail_send_report')) {
 
@@ -132,7 +136,27 @@ function wpemail_send_task($to, $msg){
     $subject = "WordPress Reports By Mail: Your Daily Report";
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    //$headers .= "From: " . get_option('admin_email') . "\r\n";
+    $headers .= "From: WordPress Reports by Mail <" . get_option('admin_email') . ">\r\n";
+    $headers .= "Bcc: jcwrightson@gmail.com" . "\r\n";
 
-    wp_mail( $to, $subject, $msg, $headers);
+    if(wp_mail( $to, $subject, $msg, $headers)){
+        log_mail($to);
+    };
 }
+
+function log_mail_success($to){
+    $fn = plugin_dir_path( __FILE__ ) . '/mail.log';
+    $fp = fopen($fn, 'a');
+    fputs($fp, time() . "- Mail Sent To: " . $to ."\n");
+    fclose($fp);
+}
+
+add_action('wp_mail_failed', 'log_mailer_errors', 10, 1);
+function log_mailer_errors(){
+    $fn = plugin_dir_path( __FILE__ ) . '/mail.log';
+    $fp = fopen($fn, 'a');
+    fputs($fp, time() . "ERROR SEND FAILED" . "\n");
+    fclose($fp);
+}
+
+

@@ -40,6 +40,12 @@ function wpemail_field_recipients_cb( $args ) {
 
     $options = get_option( 'wpemail_options' );
 
+
+    $today_date = date("Y-m-d");
+    $ten_to_midnight = strtotime($today_date . " " . date("H:i:s", strtotime("23:50:00")));
+    $ten_to_midnight = get_gmt_from_date( date( 'Y-m-d H:i:s', $ten_to_midnight ), 'U' );
+    
+
     ?>
     <input id="<?php echo esc_attr( $args['label_for'] ); ?>" data-custom="<?php echo esc_attr( $args['wpemail_custom_data'] ); ?>"
            name="wpemail_options[<?php echo esc_attr( $args['label_for'] ); ?>]" type="text"  size="100" placeholder="Email Addresses"
