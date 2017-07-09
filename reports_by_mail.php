@@ -46,6 +46,7 @@ function wpemail_activate(){
 }
 
 add_action( 'wpemail_daily_report', 'wpemail_daily_task', 10, 1);
+add_action( 'wpemail_send_report', 'wpemail_send_task', 10, 2 );
 
 
 
