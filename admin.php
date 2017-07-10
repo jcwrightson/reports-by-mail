@@ -118,6 +118,7 @@ function print_debug(){
     <h1>Debug Stuff</h1>
     <section id="wpemail_reports">
     <?php
+    echo 'Time Now: ' . date('Y-m-d H:i:s', current_time( 'timestamp' )) . "<br/>";
     echo 'Today Started: ' . $today . "<br/>";
     echo 'This Week Started: ' . $thisweek . "<br/>";
     echo 'This Month Started: ' . $thismonth . "<br/>";
@@ -203,10 +204,10 @@ function wpemail_options_page_html() {
 
         </form>
 
-<!--        --><?php //print_debug(); ?>
-<!---->
-<!--        <h1>Email Sample:</h1>-->
-<!--        --><?php //wpemail_daily_task(true); ?>
+        <?php print_debug(); ?>
+
+        <h1>Email Sample:</h1>
+        <?php wpemail_daily_task(true); ?>
 
     </div>
     <?php

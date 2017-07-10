@@ -134,9 +134,9 @@ function schedule_mail($to, $msg, $time){
 
     if (!wp_next_scheduled('wpemail_send_report')) {
 
-        wp_schedule_single_event(strtotime($time), 'wpemail_send_report', [$to, $msg]);
+        wp_schedule_single_event($time, 'wpemail_send_report', [$to, $msg]);
 
-        logger("Cron job registered: ". strtotime($time));
+        logger("Cron job registered: ". $time);
         //Debug
 //        wp_schedule_single_event(time(), 'wpemail_send_report', [$to, $msg]);
     }
@@ -160,7 +160,12 @@ function wpemail_send_task($to, $msg){
 function logger($statement){
     $fn = plugin_dir_path( __FILE__ ) . '/reports-by-mail.log';
     $fp = fopen($fn, 'a');
-    fputs($fp, date("Y-m-d H:i:s" ,time()) . ' - ' . $statement . "\n");
+    $today_date = date("Y-m-d ");
+   
+    
+
+    fputs($fp, $today_date . date("H:i:s", current_time( 'timestamp' )) . ' - ' . $statement . "\n");
+
     fclose($fp);
 }
 
