@@ -4,7 +4,7 @@
 Plugin Name: Reports by Mail
 Plugin URI: https://github.com/jcwrightson/reports-by-mail
 Description: Get daily/weekly/monthly reports of published posts directly to your inbox.
-Version:     1.3a
+Version:     1.6a
 Author:      jcwrightson
 Author URI:  mailto:jcwrightson@gmail.com
 License:     GPL2
